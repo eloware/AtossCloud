@@ -10,6 +10,7 @@
     <Copyright>ELOWARE GmbH</Copyright>
     <PackageProjectUrl>https://github.com/eloware/AtossCloud</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/eloware/AtossCloud/blob/main/LICENSE</PackageLicenseUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/eloware/AtossCloud</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>ATOSS TimeControl</PackageTags>

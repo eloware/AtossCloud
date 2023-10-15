@@ -12,7 +12,8 @@ public class AtossClient {
     public string Password { get; set; }
     public string ServerAddress { get; set; }
 
-    private ATCWebClient client;
+    private ATCWebClient? _client;
+    private const string NotLoggedIn = "Not logged in. Please call Login() first";
 
     public AtossClient(string username, string password, string serverAddress) {
         Username = username;
@@ -48,12 +49,12 @@ public class AtossClient {
         SecurityBindingElement element =
             customBinding.Elements.Find<SecurityBindingElement>(); // set endpoint address
 
-        client = new ATCWebClient(binding, new EndpointAddress(ServerAddress));
-        client.ClientCredentials.UserName.UserName = Username;
-        client.ClientCredentials.UserName.Password = Password;
+        _client = new ATCWebClient(binding, new EndpointAddress(ServerAddress));
+        _client.ClientCredentials.UserName.UserName = Username;
+        _client.ClientCredentials.UserName.Password = Password;
         // await client.OpenAsync();
         try {
-            await client.loginAsync();
+            await _client.loginAsync();
         }
         catch (Exception e) {
             Console.WriteLine("Login failed");
@@ -61,12 +62,16 @@ public class AtossClient {
             throw;
         }
 
-        Console.WriteLine($"Logged in, client state {client.State}");
+        Console.WriteLine($"Logged in, client state {_client.State}");
     }
 
 
     public async Task<List<Employee>> GetAllEmployeesAsync() {
-        var apiResult = await client.getEmployeesAsync(0, 0, null, null, null, null, null, null);
+        if (_client == null) {
+            throw new Exception(NotLoggedIn);
+        }
+
+        var apiResult = await _client.getEmployeesAsync(0, 0, null, null, null, null, null, null);
         var employeeData = apiResult.@return.ToList();
 
         var result = new List<Employee>();
@@ -80,12 +85,30 @@ public class AtossClient {
     }
 
     public async Task<string?> IdentifyEmployeeWithTag(string employeeId) {
+        if (_client == null) {
+            throw new Exception(NotLoggedIn);
+        }
+
         try {
-            var result = await client.getBadgeEmployeeAsync(employeeId, "", false);
+            var result = await _client.getBadgeEmployeeAsync(employeeId, "", false);
             return result.@return;
         }
         catch (Exception e) {
             return null;
         }
+    }
+
+    public async Task<List<Table>> GetTables() {
+        if (_client == null) {
+            throw new Exception(NotLoggedIn);
+        }
+
+        var result = new List<Table>();
+        var tables = await _client.getTablesAsync("");
+        foreach (var table in tables.@return) {
+            result.Add(Helper.Convert<Table>(table));
+        }
+
+        return result;
     }
 }

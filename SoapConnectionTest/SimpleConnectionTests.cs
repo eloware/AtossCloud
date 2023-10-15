@@ -44,4 +44,9 @@ public class SimpleConnectionTests {
         result.Should().NotBeNull();
         result.Should().Be(_config["TestData:EmployeeId"]);
     }
+    
+    [Fact]
+    public async Task TestGetTables() {
+        await _client.GetTables();
+    }
 }

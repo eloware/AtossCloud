@@ -1,43 +1,43 @@
 namespace AtossSoap.Models;
 
 public class Employee {
-    public string Systemusername { get; set; }
-    public string Firstname { get; set; }
-    public string City { get; set; }
-    public string Latitude { get; set; }
+    public string? Systemusername { get; set; }
+    public string? Firstname { get; set; }
+    public string? City { get; set; }
+    public string? Latitude { get; set; }
 
     [AtossName("externalid")]
-    public string ExternalId { get; set; }
+    public string? ExternalId { get; set; }
 
-    public string Language { get; set; }
+    public string? Language { get; set; }
 
     [AtossName("employee")]
-    public string EmployeeId { get; set; }
+    public string? EmployeeId { get; set; }
 
-    public string Latitude2 { get; set; }
-    public string Street { get; set; }
-    public string Mainproject { get; set; }
-    public string Fax { get; set; }
-    public string Mainworkplace { get; set; }
-    public string Email { get; set; }
-    public string Methodofpayment { get; set; }
-    public string Longitude { get; set; }
-    public string Licence { get; set; }
-    public string Postcode { get; set; }
-    public string Mobile { get; set; }
-    public string Telephone { get; set; }
-    public string Maincostcenter { get; set; }
-    public string Lastname { get; set; }
-    public string Alttimerecordingclerk { get; set; }
-    public string Selection1 { get; set; }
-    public string Selection3 { get; set; }
-    public string Longitude2 { get; set; }
-    public string Selection2 { get; set; }
-    public string Timerecordingclerk { get; set; }
-    public string Selection5 { get; set; }
-    public string Selection4 { get; set; }
-    public string Selection7 { get; set; }
-    public string Selection6 { get; set; }
+    public string? Latitude2 { get; set; }
+    public string? Street { get; set; }
+    public string? Mainproject { get; set; }
+    public string? Fax { get; set; }
+    public string? Mainworkplace { get; set; }
+    public string? Email { get; set; }
+    public string? Methodofpayment { get; set; }
+    public string? Longitude { get; set; }
+    public string? Licence { get; set; }
+    public string? Postcode { get; set; }
+    public string? Mobile { get; set; }
+    public string? Telephone { get; set; }
+    public string? Maincostcenter { get; set; }
+    public string? Lastname { get; set; }
+    public string? Alttimerecordingclerk { get; set; }
+    public string? Selection1 { get; set; }
+    public string? Selection3 { get; set; }
+    public string? Longitude2 { get; set; }
+    public string? Selection2 { get; set; }
+    public string? Timerecordingclerk { get; set; }
+    public string? Selection5 { get; set; }
+    public string? Selection4 { get; set; }
+    public string? Selection7 { get; set; }
+    public string? Selection6 { get; set; }
     public int Commercial { get; set; }
     public int Holidaycalendar { get; set; }
     public int Setbalancetozerotype { get; set; }

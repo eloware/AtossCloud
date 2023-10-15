@@ -15,7 +15,7 @@ public class Helper {
         markdown.AppendLine("## String properties");
         foreach (var property in dataModel.stringProperties) {
             markdown.AppendLine($"* {property.key}");
-            modelFile.AppendLine($"public string {property.key} {{ get; set; }}");
+            modelFile.AppendLine($"public string? {property.key} {{ get; set; }}");
         }
         markdown.AppendLine("## Integer properties");
         foreach (var property in dataModel.integerProperties) {

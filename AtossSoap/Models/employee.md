@@ -1,5 +1,7 @@
 # Employee
+
 ## String properties
+
 * systemusername
 * firstname
 * city
@@ -31,7 +33,9 @@
 * selection4
 * selection7
 * selection6
+
 ## Integer properties
+
 * commercial
 * holidaycalendar
 * setbalancetozerotype
@@ -61,13 +65,18 @@
 * accesspriority
 * workingtimemodel
 * areatype
+
 ## Double properties
+
 * hourlywagerateextern
 * vacationentitlementdays
 * radius
 * hourlywagerate
+
 ## Binary properties
+
 ## Duration properties
+
 * maximumbalancemonth
 * maximumsumofbalance
 * debit09
@@ -88,12 +97,16 @@
 * maximumcarryovermonth
 * maximumweek
 * endofmonthvalue
+
 ## List properties
+
 ## DateTime properties
+
 * dateofbirth
 * endregistration
 * leave
 * startregistration
 * entrance
 * startofleaveyear
+
 ## XML properties
