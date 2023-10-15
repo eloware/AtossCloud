@@ -63,11 +63,36 @@ public class SimpleConnectionTests {
         var badged = await _client.GetBadges();
         badged.Should().NotBeNull();
         badged.Count.Should().BeGreaterThan(0);
-        
-        badged.ForEach(b=>b.EmployeeId.Should().NotBeNull());
-        
+
+        badged.ForEach(b => b.EmployeeId.Should().NotBeNull());
+
         foreach (var badge in badged.Take(100)) {
             output.WriteLine($"Badge {badge.Id} for {badge.EmployeeId}");
         }
+    }
+
+    [Fact]
+    public async Task GetDepartments() {
+        var departments = await _client.GetDepartments();
+        departments.Should().NotBeNull();
+        departments.Count.Should().BeGreaterThan(0);
+        departments.ForEach(d=>output.WriteLine($"{d.Name}"));
+    }
+    
+    /// <summary>
+    /// Getting all accounts
+    /// </summary>
+    [Fact]
+    public async Task GetAccounts() {
+        var accounts = await _client.GetAccounts();
+        accounts.Should().NotBeNull();
+        accounts.Count.Should().BeGreaterThan(0);
+        accounts.ForEach(a=>output.WriteLine($"{a.Name}"));
+    }
+
+   
+   // [Fact]
+    public async Task Dummy() {
+        await _client.Dummy();
     }
 }

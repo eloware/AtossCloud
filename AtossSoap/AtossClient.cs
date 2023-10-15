@@ -8,9 +8,9 @@ using AtossSoap.Models;
 namespace AtossSoap;
 
 public class AtossClient {
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string ServerAddress { get; set; }
+    private string Username { get; set; }
+    private string Password { get; set; }
+    private string ServerAddress { get; set; }
 
     private ATCWebClient? _client;
     private const string NotLoggedIn = "Not logged in. Please call Login() first";
@@ -21,6 +21,9 @@ public class AtossClient {
         ServerAddress = serverAddress;
     }
 
+    /// <summary>
+    /// Logs in to the server
+    /// </summary>
     public async Task Login() {
         var binding = new BasicHttpsBinding(BasicHttpsSecurityMode.Transport) {
             Name = "WebIAPIServiceSoapBinding",
@@ -66,6 +69,11 @@ public class AtossClient {
     }
 
 
+    /// <summary>
+    /// Returns all employees found in the system
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<List<Employee>> GetAllEmployeesAsync() {
         if (_client == null) {
             throw new Exception(NotLoggedIn);
@@ -84,13 +92,19 @@ public class AtossClient {
         return result;
     }
 
-    public async Task<string?> IdentifyEmployeeWithTag(string employeeId) {
+    /// <summary>
+    /// Returns the employee ID for the given tag or null if no employee is found
+    /// </summary>
+    /// <param name="rfidTagNumber">RfID Tag number</param>
+    /// <returns>Employee ID if found otherwise null</returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<string?> IdentifyEmployeeWithTag(string rfidTagNumber) {
         if (_client == null) {
             throw new Exception(NotLoggedIn);
         }
 
         try {
-            var result = await _client.getBadgeEmployeeAsync(employeeId, "", false);
+            var result = await _client.getBadgeEmployeeAsync(rfidTagNumber, "", false);
             return result.@return;
         }
         catch (Exception e) {
@@ -98,6 +112,11 @@ public class AtossClient {
         }
     }
 
+    /// <summary>
+    /// Returns all tables found in the system
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<List<Table>> GetTables() {
         if (_client == null) {
             throw new Exception(NotLoggedIn);
@@ -112,6 +131,12 @@ public class AtossClient {
         return result;
     }
 
+    /// <summary>
+    /// Returns the badges for the given employeeId. If no employeeId is given, all badges are returned
+    /// </summary>
+    /// <param name="employeeId">Optional Employee ID</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<List<Badge>> GetBadges(string? employeeId = null) {
         if (_client == null) {
             throw new Exception(NotLoggedIn);
@@ -123,9 +148,53 @@ public class AtossClient {
         var result = new List<Badge>();
         foreach (var badge in badges.@return) {
             result.Add(Helper.Convert<Badge>(badge));
-            Helper.StoreStructure("Badge", badge);
         }
 
         return result;
+    }
+
+
+    /// <summary>
+    /// Returns all Departments found in the system
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<List<Department>> GetDepartments() {
+        if (_client == null) {
+            throw new Exception(NotLoggedIn);
+        }
+
+        var departments = await _client.getDepartmentsAsync(null, 0, 0, null, null, -1);
+        var result = new List<Department>();
+        foreach (var department in departments.@return) {
+            result.Add(Helper.Convert<Department>(department));
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Returns all accounts found in the system
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<List<Account>> GetAccounts() {
+        if (_client == null) {
+            throw new Exception(NotLoggedIn);
+        }
+        var items = await _client.getAccountsAsync(-1,null,null,null,0);
+        
+        var result = new List<Account>();
+        foreach (var item in items.@return) {
+            result.Add(Helper.Convert<Account>(item));
+        }
+
+        return result;
+    }
+
+    public async Task Dummy() {
+        var items = await _client.getAccountsAsync(-1,null,null,null,0);
+
+        Helper.StoreStructure("Account", items.@return.First());
     }
 }

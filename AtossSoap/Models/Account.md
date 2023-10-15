@@ -1,23 +1,25 @@
-# Badge
+# Account
+
 ## String properties
-* pin
-* project
-* id
-* employee
+
+* name
+
 ## Integer properties
-* number
-* badgetype
-* chip
-* validationindex
-* options
-* update
-* locked
-* offlinetoggle
+
+* directposting
+* isabsence
+* account
+
 ## Double properties
+
+* valuationfactor1
+
 ## Binary properties
+
 ## Duration properties
+
 ## List properties
+
 ## DateTime properties
-* validfrom
-* validto
+
 ## XML properties
