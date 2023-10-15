@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtossSoap", "AtossSoap\AtossSoap.csproj", "{B04AB315-5F2D-4B1E-AA64-51E403BD7870}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoapConnectionTest", "SoapConnectionTest\SoapConnectionTest.csproj", "{5C24C5B2-F465-4D09-91D8-860378BFE435}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B04AB315-5F2D-4B1E-AA64-51E403BD7870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B04AB315-5F2D-4B1E-AA64-51E403BD7870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B04AB315-5F2D-4B1E-AA64-51E403BD7870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B04AB315-5F2D-4B1E-AA64-51E403BD7870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C24C5B2-F465-4D09-91D8-860378BFE435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C24C5B2-F465-4D09-91D8-860378BFE435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C24C5B2-F465-4D09-91D8-860378BFE435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C24C5B2-F465-4D09-91D8-860378BFE435}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
