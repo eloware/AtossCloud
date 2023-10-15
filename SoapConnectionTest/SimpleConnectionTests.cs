@@ -90,6 +90,16 @@ public class SimpleConnectionTests {
         accounts.ForEach(a=>output.WriteLine($"{a.Name}"));
     }
 
+    /// <summary>
+    /// Getting all Bookings for a given employee within the last 20 days
+    /// </summary>
+    [Fact]
+    public async Task GetBookings() {
+        var bookings = await _client.GetBookings( DateTime.Now.AddDays(-20), DateTime.Now, _config["TestData:EmployeeId"]!);
+        bookings.Should().NotBeNull();
+        bookings.Count.Should().BeGreaterThan(0);
+        bookings.ForEach(b=>output.WriteLine($"{b.Date} {b.Duration} {b.Remark}"));
+    }
    
    // [Fact]
     public async Task Dummy() {

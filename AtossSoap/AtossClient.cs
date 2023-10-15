@@ -182,8 +182,9 @@ public class AtossClient {
         if (_client == null) {
             throw new Exception(NotLoggedIn);
         }
-        var items = await _client.getAccountsAsync(-1,null,null,null,0);
-        
+
+        var items = await _client.getAccountsAsync(-1, null, null, null, 0);
+
         var result = new List<Account>();
         foreach (var item in items.@return) {
             result.Add(Helper.Convert<Account>(item));
@@ -192,9 +193,32 @@ public class AtossClient {
         return result;
     }
 
-    public async Task Dummy() {
-        var items = await _client.getAccountsAsync(-1,null,null,null,0);
 
-        Helper.StoreStructure("Account", items.@return.First());
+    public async Task<List<Booking>> GetBookings(DateTime from, DateTime until, string? employeeId = null) {
+        var employeeArray = employeeId != null ? new string[] { employeeId } : new string[] { };
+
+        var result = new List<Booking>();
+        var items = await _client.getBookingsAsync(employeeArray, from, until, 0, null, null, null, null, null, null,
+            0);
+        
+        foreach (var item in items.@return) {
+            result.Add(Helper.Convert<Booking>(item));
+        }
+
+        return result;
+
+    }
+
+    public async Task Dummy() {
+        DateTime from = DateTime.Now.AddDays(-20);
+        DateTime until = DateTime.Now;
+        string? employeeId = "418";
+        
+        var employeeArray = employeeId != null ? new string[] { employeeId } : new string[] { };
+
+        var items = await _client.getBookingsAsync(employeeArray, from, until, 0, null, null, null, null, null, null,
+            0);
+
+        Helper.StoreStructure("Booking", items.@return.First());
     }
 }
