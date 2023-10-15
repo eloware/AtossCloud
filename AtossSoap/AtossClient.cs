@@ -111,4 +111,21 @@ public class AtossClient {
 
         return result;
     }
+
+    public async Task<List<Badge>> GetBadges(string? employeeId = null) {
+        if (_client == null) {
+            throw new Exception(NotLoggedIn);
+        }
+
+        var employeeArray = employeeId != null ? new string[] { employeeId } : new string[] { };
+
+        var badges = await _client.getBadgesAsync("", employeeArray, "");
+        var result = new List<Badge>();
+        foreach (var badge in badges.@return) {
+            result.Add(Helper.Convert<Badge>(badge));
+            Helper.StoreStructure("Badge", badge);
+        }
+
+        return result;
+    }
 }

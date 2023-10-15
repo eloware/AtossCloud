@@ -49,4 +49,25 @@ public class SimpleConnectionTests {
     public async Task TestGetTables() {
         await _client.GetTables();
     }
+
+    [Fact]
+    public async Task GetBadgeForEmployee() {
+        var badge = await _client.GetBadges(_config["TestData:EmployeeId"]!);
+        badge.Should().NotBeNull();
+        badge.Count.Should().BeGreaterThan(0);
+        badge.Where(b=>b.Id == _config["TestData:RfID"]).Should().NotBeNull();
+    }
+
+    [Fact]
+    public async Task TestGetBadge() {
+        var badged = await _client.GetBadges();
+        badged.Should().NotBeNull();
+        badged.Count.Should().BeGreaterThan(0);
+        
+        badged.ForEach(b=>b.EmployeeId.Should().NotBeNull());
+        
+        foreach (var badge in badged.Take(100)) {
+            output.WriteLine($"Badge {badge.Id} for {badge.EmployeeId}");
+        }
+    }
 }
