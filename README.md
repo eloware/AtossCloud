@@ -9,5 +9,10 @@ This NuGet package provides a simple way to connect to the ATOSS Cloud API.
 ## Functions
 
 Currently the following functions are implemented:
- - Get all employees
- - Get Employee ID by RfID Tag
+
+* GetEmployee
+* GetAccounts
+* GetBadges
+* GetBookings
+* GetTables
+* GetDepartments
