@@ -6,6 +6,14 @@
     <Nullable>enable</Nullable>
     <Title>ATOSS Cloud Connection</Title>
     <Description>Connecting to Atoss Cloud</Description>
+    <Version>0.0.1-beta.1</Version>
+    <Copyright>ELOWARE GmbH</Copyright>
+    <PackageProjectUrl>https://github.com/eloware/AtossCloud</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/eloware/AtossCloud/blob/main/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/eloware/AtossCloud</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>ATOSS TimeControl</PackageTags>
+    <PackageReleaseNotes>Not Released yet</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.*" />
