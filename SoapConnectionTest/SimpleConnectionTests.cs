@@ -106,7 +106,15 @@ public class SimpleConnectionTests {
     [Fact]
     public async Task GetStateForEmployee() {
         var state = await _client.GetEmployeeState(_config["TestData:EmployeeId"]!);
-        output.WriteLine($"Account id of the current state {state.Account}");
+        state.Should().NotBeNull();
+        output.WriteLine($"Account id of the current state {state.Account} since {state.LastTimestamp}");
+        
+        var account = await _client.GetAccounts();
+        account.Should().NotBeNull();
+        account.Count.Should().BeGreaterThan(0);
+        
+        var accountName = account.FirstOrDefault(a => a.AccountId == state.Account)?.Name;
+        output.WriteLine("Account name: " + accountName);
     }
 
     // [Fact]

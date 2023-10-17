@@ -15,7 +15,7 @@ This packages provides and easy to use and well documented abstraction layer to 
 ## Usage
 
 ```csharp
-var client = new AtossClient(
+var client = ClientFactory.Create(
             "Username",
             "Password",
             "Server Url");
