@@ -1,13 +1,19 @@
-﻿using System.ServiceModel;
+﻿using System.Runtime.CompilerServices;
+using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.Text;
 using AtossSoap.ATCWebService;
 using AtossSoap.Models;
 
+[assembly:InternalsVisibleTo("SoapConnectionTest")]
 namespace AtossSoap;
 
-public class AtossClient {
+public static class ClientFactory {
+    public static IAtossClient Create(string username, string password, string serverAddress) {
+        return new AtossClient(username, password, serverAddress);
+    }
+}
+
+internal class AtossClient : IAtossClient {
     private string Username { get; set; }
     private string Password { get; set; }
     private string ServerAddress { get; set; }
@@ -195,6 +201,10 @@ public class AtossClient {
 
 
     public async Task<List<Booking>> GetBookings(DateTime from, DateTime until, string? employeeId = null) {
+        if (_client == null) {
+            throw new Exception(NotLoggedIn);
+        }
+        
         var employeeArray = employeeId != null ? new string[] { employeeId } : new string[] { };
 
         var result = new List<Booking>();
@@ -207,6 +217,17 @@ public class AtossClient {
 
         return result;
 
+    }
+
+    public async Task<State> GetEmployeeState(string employeeId) {
+        if (_client == null) {
+            throw new Exception(NotLoggedIn);
+        }
+
+        var state = await _client.getEmployeeStateAsync(null, new[] { employeeId }, DateTime.Now, -1, 0);
+        var result = Helper.Convert<State>(state.@return.First());
+
+        return result;
     }
 
     public async Task Dummy() {

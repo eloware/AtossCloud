@@ -6,7 +6,7 @@ using Xunit.Abstractions;
 namespace SoapConnectionTest;
 
 public class SimpleConnectionTests {
-    private readonly AtossClient _client;
+    private readonly IAtossClient _client;
     private readonly IConfigurationRoot _config;
     private readonly ITestOutputHelper output;
 
@@ -16,7 +16,7 @@ public class SimpleConnectionTests {
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
 
-        _client = new AtossClient(
+        _client = ClientFactory.Create(
             _config["Atoss:Username"]!,
             _config["Atoss:Password"]!,
             _config["Atoss:ServerAddress"]!);
@@ -30,11 +30,12 @@ public class SimpleConnectionTests {
         employees.Should().NotBeNull();
 
         output.WriteLine($"Found {employees.Count.ToString()} Employees");
-        
+
         output.WriteLine("| EmployeeId | Name | Dateofbirth | Maximumbalancemonth |");
         output.WriteLine("| --- | --- | --- | --- |");
         foreach (var employee in employees) {
-            output.WriteLine($"| {employee.EmployeeId} | {employee.Firstname} | {employee.Lastname} | {employee.Dateofbirth} | {employee.Maximumbalancemonth} |");
+            output.WriteLine(
+                $"| {employee.EmployeeId} | {employee.Firstname} | {employee.Lastname} | {employee.Dateofbirth} | {employee.Maximumbalancemonth} |");
         }
     }
 
@@ -44,7 +45,7 @@ public class SimpleConnectionTests {
         result.Should().NotBeNull();
         result.Should().Be(_config["TestData:EmployeeId"]);
     }
-    
+
     [Fact]
     public async Task TestGetTables() {
         await _client.GetTables();
@@ -55,7 +56,7 @@ public class SimpleConnectionTests {
         var badge = await _client.GetBadges(_config["TestData:EmployeeId"]!);
         badge.Should().NotBeNull();
         badge.Count.Should().BeGreaterThan(0);
-        badge.Where(b=>b.Id == _config["TestData:RfID"]).Should().NotBeNull();
+        badge.Where(b => b.Id == _config["TestData:RfID"]).Should().NotBeNull();
     }
 
     [Fact]
@@ -76,9 +77,9 @@ public class SimpleConnectionTests {
         var departments = await _client.GetDepartments();
         departments.Should().NotBeNull();
         departments.Count.Should().BeGreaterThan(0);
-        departments.ForEach(d=>output.WriteLine($"{d.Name}"));
+        departments.ForEach(d => output.WriteLine($"{d.Name}"));
     }
-    
+
     /// <summary>
     /// Getting all accounts
     /// </summary>
@@ -87,7 +88,7 @@ public class SimpleConnectionTests {
         var accounts = await _client.GetAccounts();
         accounts.Should().NotBeNull();
         accounts.Count.Should().BeGreaterThan(0);
-        accounts.ForEach(a=>output.WriteLine($"{a.Name}"));
+        accounts.ForEach(a => output.WriteLine($"{a.Name}"));
     }
 
     /// <summary>
@@ -95,14 +96,21 @@ public class SimpleConnectionTests {
     /// </summary>
     [Fact]
     public async Task GetBookings() {
-        var bookings = await _client.GetBookings( DateTime.Now.AddDays(-20), DateTime.Now, _config["TestData:EmployeeId"]!);
+        var bookings =
+            await _client.GetBookings(DateTime.Now.AddDays(-20), DateTime.Now, _config["TestData:EmployeeId"]!);
         bookings.Should().NotBeNull();
         bookings.Count.Should().BeGreaterThan(0);
-        bookings.ForEach(b=>output.WriteLine($"{b.Date} {b.Duration} {b.Remark}"));
+        bookings.ForEach(b => output.WriteLine($"{b.Date} {b.Duration} {b.Remark}"));
     }
-   
-   // [Fact]
+
+    [Fact]
+    public async Task GetStateForEmployee() {
+        var state = await _client.GetEmployeeState(_config["TestData:EmployeeId"]!);
+        output.WriteLine($"Account id of the current state {state.Account}");
+    }
+
+    // [Fact]
     public async Task Dummy() {
-        await _client.Dummy();
+        await (_client as AtossClient)!.Dummy();
     }
 }

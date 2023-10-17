@@ -4,12 +4,12 @@
     &lt;TestId&gt;::9A7B595D-3A42-4F9E-BB76-5C22B1A4E950::.NETCoreApp,Version=v3.1::Tests.DayOfWeekMaskTest.TestForDaysOfWeek&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d52104a4_002D03c9_002D4585_002D908f_002D0607e1d5b1f3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestForDaysOfWeek" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d52104a4_002D03c9_002D4585_002D908f_002D0607e1d5b1f3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestForDaysOfWeek" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::5C24C5B2-F465-4D09-91D8-860378BFE435::net7.0::SoapConnectionTest.SimpleConnectionTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=dda5df96_002D6ed3_002D42ce_002D8524_002D7f3b5ec27222/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="SimpleConnectionTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=dda5df96_002D6ed3_002D42ce_002D8524_002D7f3b5ec27222/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SimpleConnectionTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::5C24C5B2-F465-4D09-91D8-860378BFE435::net7.0::SoapConnectionTest.SimpleConnectionTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
