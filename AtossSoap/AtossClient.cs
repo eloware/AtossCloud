@@ -200,17 +200,25 @@ internal class AtossClient : IAtossClient {
     }
 
 
+    /// <summary>
+    /// Gets a list of bookings within a specified time range.
+    /// </summary>
+    /// <param name="from">The starting date and time of the range.</param>
+    /// <param name="until">The ending date and time of the range.</param>
+    /// <param name="employeeId">Optional. The ID of the employee to filter the bookings (default is null).</param>
+    /// <returns>A list of bookings.</returns>
+    /// <exception cref="Exception">Thrown when the client is not logged in.</exception>
     public async Task<List<Booking>> GetBookings(DateTime from, DateTime until, string? employeeId = null) {
         if (_client == null) {
             throw new Exception(NotLoggedIn);
         }
-        
+
         var employeeArray = employeeId != null ? new string[] { employeeId } : new string[] { };
 
         var result = new List<Booking>();
         var items = await _client.getBookingsAsync(employeeArray, from, until, 0, null, null, null, null, null, null,
             0);
-        
+
         foreach (var item in items.@return) {
             result.Add(Helper.Convert<Booking>(item));
         }
@@ -219,6 +227,12 @@ internal class AtossClient : IAtossClient {
 
     }
 
+    /// <summary>
+    /// Retrieves the state of an employee.
+    /// </summary>
+    /// <param name="employeeId">The ID of the employee.</param>
+    /// <returns>A Task object representing the asynchronous operation. The result of the task is the state of the employee.</returns>
+    /// <exception cref="Exception">Thrown when the client is not logged in.</exception>
     public async Task<State> GetEmployeeState(string employeeId) {
         if (_client == null) {
             throw new Exception(NotLoggedIn);
@@ -234,7 +248,7 @@ internal class AtossClient : IAtossClient {
         DateTime from = DateTime.Now.AddDays(-20);
         DateTime until = DateTime.Now;
         string? employeeId = "418";
-        
+
         var employeeArray = employeeId != null ? new string[] { employeeId } : new string[] { };
 
         var items = await _client.getBookingsAsync(employeeArray, from, until, 0, null, null, null, null, null, null,
