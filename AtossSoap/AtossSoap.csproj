@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <Title>ATOSS Cloud Connection</Title>
     <Description>Connecting to Atoss Cloud</Description>
-    <Version>0.0.0</Version>
+    <Version>0.0.1-beta.7</Version>
     <Copyright>ELOWARE GmbH</Copyright>
     <PackageProjectUrl>https://github.com/eloware/AtossCloud</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/eloware/AtossCloud/blob/main/LICENSE</PackageLicenseUrl>
