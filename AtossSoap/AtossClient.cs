@@ -3,17 +3,14 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using AtossSoap.ATCWebService;
 using AtossSoap.Models;
+using Microsoft.Extensions.Logging;
 
-[assembly:InternalsVisibleTo("SoapConnectionTest")]
+[assembly: InternalsVisibleTo("SoapConnectionTest")]
+
 namespace AtossSoap;
 
-public static class ClientFactory {
-    public static IAtossClient Create(string username, string password, string serverAddress) {
-        return new AtossClient(username, password, serverAddress);
-    }
-}
-
 internal class AtossClient : IAtossClient {
+    private readonly ILogger? _logger;
     private string Username { get; set; }
     private string Password { get; set; }
     private string ServerAddress { get; set; }
@@ -21,10 +18,29 @@ internal class AtossClient : IAtossClient {
     private ATCWebClient? _client;
     private const string NotLoggedIn = "Not logged in. Please call Login() first";
 
-    public AtossClient(string username, string password, string serverAddress) {
+    public AtossClient(string username, string password, string serverAddress, ILogger? logger = null) {
+        _logger = logger;
         Username = username;
         Password = password;
         ServerAddress = serverAddress;
+    }
+
+    private void LogMessage(Exception e, LogLevel level = LogLevel.Error) {
+        if (_logger != null) {
+            _logger.Log(level, e, e.Message);
+        }
+        else {
+            Console.WriteLine($"{DateTime.Now} {level}: {e.Message}");
+        }
+    }
+
+    private void LogMessage(string message, LogLevel level = LogLevel.Information) {
+        if (_logger != null) {
+            _logger.Log(level, message);
+        }
+        else {
+            Console.WriteLine($"{DateTime.Now} {level}: {message}");
+        }
     }
 
     /// <summary>
@@ -66,12 +82,12 @@ internal class AtossClient : IAtossClient {
             await _client.loginAsync();
         }
         catch (Exception e) {
-            Console.WriteLine("Login failed");
-            Console.WriteLine(e);
+            LogMessage("Login failed");
+            LogMessage(e);
             throw;
         }
 
-        Console.WriteLine($"Logged in, client state {_client.State}");
+        LogMessage($"Logged in, client state {_client.State}");
     }
 
 
@@ -96,6 +112,37 @@ internal class AtossClient : IAtossClient {
         }
 
         return result;
+    }
+
+
+    /// <summary>
+    /// Retrieves an employee with the specified employee ID.
+    /// </summary>
+    /// <param name="employeeId">The ID of the employee to retrieve.</param>
+    /// <returns>The employee object with the specified employee ID.</returns>
+    /// <exception cref="Exception">Thrown when the client is not logged in.</exception>
+    public async Task<Employee> GetEmployee(string employeeId) {
+        if (_client == null) {
+            throw new Exception(NotLoggedIn);
+        }
+
+        try {
+            var apiResult = await _client.getEmployeesAsync(0, 0, new []{employeeId}, null, null, null, null, null);
+            var employeeData = apiResult.@return.ToList();
+
+            var result = new List<Employee>();
+
+            foreach (var employee in employeeData) {
+                var convertedEmployee = Helper.Convert<Employee>(employee);
+                result.Add(convertedEmployee);
+            }
+
+            return result.First();
+        }
+        catch (Exception e) {
+            LogMessage(e);
+            throw;
+        }
     }
 
     /// <summary>
@@ -224,7 +271,6 @@ internal class AtossClient : IAtossClient {
         }
 
         return result;
-
     }
 
     /// <summary>

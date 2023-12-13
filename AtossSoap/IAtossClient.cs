@@ -60,11 +60,18 @@ public interface IAtossClient {
     /// <param name="employeeId">Optional employee id</param>
     /// <returns></returns>
     Task<List<Booking>> GetBookings(DateTime from, DateTime until, string? employeeId = null);
-    
+
     /// <summary>
     /// Returns the current state of the employee
     /// </summary>
     /// <param name="employeeId"></param>
     /// <returns></returns>
     Task<State> GetEmployeeState(string employeeId);
+
+    /// <summary>
+    /// Retrieves an employee with the specified employee ID.
+    /// </summary>
+    /// <param name="employeeId">The ID of the employee to retrieve.</param>
+    /// <returns>A Task representing the asynchronous operation. The Task will contain the retrieved Employee object.</returns>
+    Task<Employee> GetEmployee(string employeeId);
 }
