@@ -121,14 +121,14 @@ internal class AtossClient : IAtossClient {
     /// <param name="employeeId">The ID of the employee to retrieve.</param>
     /// <returns>The employee object with the specified employee ID.</returns>
     /// <exception cref="Exception">Thrown when the client is not logged in.</exception>
-    public async Task<Employee> GetEmployee(string employeeId) {
+    public async Task<Employee?> GetEmployee(string employeeId) {
         if (_client == null) {
             throw new Exception(NotLoggedIn);
         }
 
         try {
             var apiResult = await _client.getEmployeesAsync(0, 0, new []{employeeId}, null, null, null, null, null);
-            var employeeData = apiResult.@return.ToList();
+            var employeeData = apiResult?.@return?.ToList();
 
             var result = new List<Employee>();
 
@@ -137,7 +137,7 @@ internal class AtossClient : IAtossClient {
                 result.Add(convertedEmployee);
             }
 
-            return result.First();
+            return result.FirstOrDefault();
         }
         catch (Exception e) {
             LogMessage(e);

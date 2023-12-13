@@ -73,5 +73,5 @@ public interface IAtossClient {
     /// </summary>
     /// <param name="employeeId">The ID of the employee to retrieve.</param>
     /// <returns>A Task representing the asynchronous operation. The Task will contain the retrieved Employee object.</returns>
-    Task<Employee> GetEmployee(string employeeId);
+    Task<Employee?> GetEmployee(string employeeId);
 }

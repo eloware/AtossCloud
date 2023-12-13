@@ -56,6 +56,12 @@ public class SimpleConnectionTests {
     }
 
     [Fact]
+    public async Task GetSingleEmployee_IdA() {
+        var employee = await _client.GetEmployee("a");
+        employee.Should().BeNull();
+    }
+
+    [Fact]
     public async Task TestGetTables() {
         await _client.GetTables();
     }
